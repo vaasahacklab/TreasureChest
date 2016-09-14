@@ -1,3 +1,9 @@
+/*
+ * Parametric laser cuttable treasure chest
+ * Author: wolfgar
+*/
+
+// customizable parameters:
 materialThickness = 4;
 cutWidth = 0.05;
  
@@ -6,17 +12,17 @@ height = 50;
 depth = 80;
  
 axisWidth = 2;
-plankCount = 12;
+
 jointLength = 10;
 footWidth = 30;
+
+// other parameters (touching these at own risk):
+plankCount = 12;
 latchHeight = 15;
 latchHoleOffset = 10;
 lockHoleDiam = 8;
  
-color_1 = [0,0,0];
-color_2 = [1,0,0];
- 
-//constants
+//constants (do not touch these unless you can defy reality):
 PI = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679828651328230;
  
 //derived values (do not touch these unless you know what you are doing):
@@ -54,7 +60,7 @@ front_y = height + footHeight;
 front_x = width;
  
 $fn = 50;
-build = false;
+build = true;
  
 if(build) {
     bottom();
@@ -80,8 +86,6 @@ if(build) {
     translate([(width/2+dist+5*materialThickness), -depth/2-2*dist-materialThickness*13]) mirror() latchBase();
    
 }
-
-latchSide();
 
 module hinge_upper(){
     rotate([0,0,-90])
@@ -114,7 +118,7 @@ module hinge_upper(){
                     
                     }
             }
-            translate([depth/2+materialThickness,0])color(color_1)circle(d = axisWidth);
+            translate([depth/2+materialThickness,0])circle(d = axisWidth);
         }
 }
 }
