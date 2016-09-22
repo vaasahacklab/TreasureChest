@@ -16,11 +16,12 @@ axisWidth = 2;
 jointLength = 10;
 footWidth = 30;
 
-// other parameters (touching these at own risk):
+lockHoleDiam = 8;
+
+// other parameters (touch these at own risk):
 plankCount = 12;
 latchHeight = 15;
-latchHoleOffset = 10;
-lockHoleDiam = 8;
+latchHoleOffset = materialThickness;
  
 //constants (do not touch these unless you can defy reality):
 PI = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679828651328230;
@@ -79,28 +80,26 @@ if(build) {
     translate([-(width/2+dist), -depth/2-dist-materialThickness*3.75]) mirror() hinge_lower();
     translate([(width/2+dist+materialThickness), -depth/2-2*dist-materialThickness*6.75]) latchSide();
     translate([-(width/2+dist+materialThickness), -depth/2-2*dist-materialThickness*6.75]) mirror() latchSide();
-    translate([(width/2+dist+9*materialThickness), -depth/2-2*dist-materialThickness*12.75]) hinge_upper();
-    translate([-(width/2+4*dist), -depth/2-2*dist-materialThickness*12.75]) mirror() hinge_upper();
-    translate([-(width/2+4*dist), -depth/2-2*dist-materialThickness*16.75]) mirror() hinge_upper();
-    translate([(width/2+dist+10*materialThickness), -depth/2-2*dist-materialThickness*4]) mirror() latchRing();
-    translate([(width/2+dist+5*materialThickness), -depth/2-2*dist-materialThickness*13]) mirror() latchBase();
-   
+    translate([(width/2+3*dist+latchHeight*2), -depth/2-2*dist-materialThickness*12.75]) rotate([0,0,-45]) hinge_upper();
+    translate([-(width/2+6*dist), -depth/2-2*dist-materialThickness*12.75]) rotate([0,0,90]) mirror() hinge_upper();
+    translate([-(width/2+4*dist), -depth/2-2*dist-materialThickness*16.75]) rotate([0,0,90]) mirror() hinge_upper();
+    translate([(width/2+dist+10*materialThickness), -depth/2-2*dist-materialThickness*3]) latchRing();
+    translate([(width/2+3*dist+latchHeight), -depth/2-2*dist-materialThickness*13]) mirror() latchBase();
 }
 
 module hinge_upper(){
-    rotate([0,0,-90])
     translate([-depth/2-materialThickness,0]){
         difference(){
             union(){
-                //translate([depth/2, -materialThickness])square([materialThickness, materialThickness]);
-            translate([depth/2+materialThickness,0])circle(d = latchRingDiam);
+            #translate([depth/2, -plankWidth/2])square([materialThickness, plankWidth/2]);
+            translate([depth/2+materialThickness,-plankWidth/2])circle(d = latchRingDiam);
             for(i = [0:2]){
                 rotate((i+.25)*180/plankCount){
                     translate([depth/2-materialThickness,0]){
-                        difference(){
+                        intersection(){
                             square([materialThickness,maleJointWidth]);
-                            if(i == 0){translate([materialThickness, maleJointWidth])rotate([0,0,120])square([materialThickness, maleJointWidth+10]);}
-                            if(i == 2){translate([materialThickness,-maleJointWidth])rotate([0,0,60])square([materialThickness, maleJointWidth+10]);}
+                            if(i == 0){translate([materialThickness, 0])rotate([0,0,120])circle(r=materialThickness);}
+                            if(i == 2){translate([materialThickness,maleJointWidth])rotate([0,0,60])circle(r=materialThickness);}
                         }
                     }
                        
@@ -108,17 +107,17 @@ module hinge_upper(){
                 }
                 difference(){
                     circle(d = depth+2*materialThickness);
-                    circle(d = depth);
+                    circle(d = depth, $fn = plankCount*2);
                     translate([-depth/2-materialThickness,-depth/2-materialThickness])
                     square([depth+2*materialThickness,depth/2+materialThickness]);
                     
-                    rotate([0,0,-180+(3.5*plankCount)])
-                    translate([-depth/2-materialThickness,-depth/2-materialThickness])
-                    square([depth+2*materialThickness,depth/2+materialThickness]);
+                    rotate([0,0,3*(180/(plankCount))])
+                    translate([-depth/2-materialThickness,0])
+                    #square([depth+2*materialThickness,depth+materialThickness]);
                     
                     }
             }
-            translate([depth/2+materialThickness,0])circle(d = axisWidth);
+            translate([depth/2+materialThickness,-plankWidth/2])circle(d = axisWidth);
         }
 }
 }
@@ -179,9 +178,9 @@ module side(){
             }
             for(i = [0:jointCount_z]){
                 translate([depth/2-materialThickness/2,2*i*jointLength-jointLength*jointCount_z])
-                    square([materialThickness, jointLength], center = true);
+                    square([materialThickness, maleJointLength], center = true);
                 translate([-depth/2+materialThickness/2,2*i*jointLength-jointLength*jointCount_z])
-                    square([materialThickness, jointLength], center = true);
+                    square([materialThickness, maleJointLength], center = true);
             }
         }
         for(i = [0:jointCount_y]) {
@@ -201,15 +200,15 @@ module bottom(){
     square([width-2*materialThickness, depth-2*materialThickness], center = true);
     for(i = [0:jointCount_x]){
         translate([2*i*jointLength-(jointCount_x*jointLength),(depth-materialThickness)/2])
-        square([maleJointLength, materialThickness], center = true);
+            square([maleJointLength, materialThickness], center = true);
         translate([2*i*jointLength-(jointCount_x*jointLength),-(depth-materialThickness)/2])
-        square([maleJointLength, materialThickness], center = true);
+            square([maleJointLength, materialThickness], center = true);
     }
     for(i = [0:jointCount_y]){
         translate([(width-materialThickness)/2, 2*i*jointLength-(jointCount_y*jointLength)])
-        square([materialThickness, maleJointLength], center = true);
+            square([materialThickness, maleJointLength], center = true);
         translate([(-width+materialThickness)/2, 2*i*jointLength-(jointCount_y*jointLength)])
-        square([materialThickness, maleJointLength], center = true);
+            square([materialThickness, maleJointLength], center = true);
     }
 }
  
@@ -222,17 +221,17 @@ module back(){
         translate([-jointCount_x*jointLength, -height/2+materialThickness/2])
         for(i = [0:jointCount_x]){
             translate([2*i*jointLength, 0])
-                square([jointLength,materialThickness], center = true);
+                square([femaleJointLength,materialThickness], center = true);
         }
         translate([width/2-materialThickness, -height/2+jointLength/2])
         for(i = [0:jointCount_z]){
             translate([0,2*i*jointLength])
-                square([materialThickness, jointLength]);
+                square([materialThickness, femaleJointLength]);
         }
         translate([-width/2, -height/2+jointLength/2])
         for(i = [0:jointCount_z]){
             translate([0,2*i*jointLength])
-                square([materialThickness, jointLength]);
+                square([materialThickness, femaleJointLength]);
         }
         for(i = [1:3]){
             translate([-plankLength/3+materialThickness, height/2-materialThickness*2*i])
@@ -264,17 +263,17 @@ module front(){
         translate([-jointCount_x*jointLength, -height/2+materialThickness/2])
         for(i = [0:jointCount_x]){
             translate([2*i*jointLength, 0])
-                square([jointLength,materialThickness], center = true);
+                square([femaleJointLength,materialThickness], center = true);
         }
         translate([width/2-materialThickness, -height/2+jointLength/2])
         for(i = [0:jointCount_z]){
             translate([0,2*i*jointLength])
-                square([materialThickness, jointLength]);
+                square([materialThickness, femaleJointLength]);
         }
         translate([-width/2, -height/2+jointLength/2])
         for(i = [0:jointCount_z]){
             translate([0,2*i*jointLength])
-                square([materialThickness, jointLength]);
+                square([materialThickness, femaleJointLength]);
         }
         translate([-materialThickness/2,height/2-latchHeight-latchHoleOffset]) square([materialThickness, latchHeight]);
     }
@@ -317,7 +316,6 @@ module lidSide(){
             rotate((i+.25)*180/plankCount){
                 translate([depth/2-materialThickness,0])
                     square([materialThickness,femaleJointWidth]);
-               
             }
         }
     }
@@ -340,9 +338,9 @@ module backPlank(){
             translate([plankLength/2+materialThickness/2,0]) square([materialThickness, maleJointWidth], center = true);
             translate([-(plankLength/2+materialThickness/2),0]) square([materialThickness, maleJointWidth], center = true);
         }
-        translate([-plankLength/4, 0]) square([materialThickness-2*cutWidth,femaleJointWidth], center = true);
-        translate([plankLength/4, 0]) square([materialThickness-2*cutWidth,femaleJointWidth], center = true);
         translate([-plankLength/3, 0]) square([materialThickness, femaleJointWidth], center = true);
+        translate([-plankLength/5, 0]) square([materialThickness-2*cutWidth,femaleJointWidth], center = true);
+        translate([plankLength/5, 0]) square([materialThickness-2*cutWidth,femaleJointWidth], center = true);
         translate([plankLength/3, 0]) square([materialThickness, femaleJointWidth], center = true);
     }
 }
@@ -354,9 +352,9 @@ module frontPlank(){
             translate([plankLength/2+materialThickness/2,0]) square([materialThickness, maleJointWidth], center = true);
             translate([-(plankLength/2+materialThickness/2),0]) square([materialThickness, maleJointWidth], center = true);
         }
+        translate([-plankLength/5, 0]) square([materialThickness-2*cutWidth,femaleJointWidth], center = true);
         square([materialThickness-2*cutWidth,femaleJointWidth], center = true);
-        translate([-plankLength/4, 0]) square([materialThickness-2*cutWidth,femaleJointWidth], center = true);
-        translate([plankLength/4, 0]) square([materialThickness-2*cutWidth,femaleJointWidth], center = true);
+        translate([plankLength/5, 0]) square([materialThickness-2*cutWidth,femaleJointWidth], center = true);
     }
 }
  
@@ -367,7 +365,7 @@ module topPlank() {
             translate([plankLength/2+materialThickness/2,0]) square([materialThickness, maleJointWidth], center = true);
             translate([-(plankLength/2+materialThickness/2),0]) square([materialThickness, maleJointWidth], center = true);
         }
-        translate([-plankLength/4, 0]) square([materialThickness-2*cutWidth,femaleJointWidth], center = true);
-        translate([plankLength/4, 0]) square([materialThickness-2*cutWidth,femaleJointWidth], center = true);
+        translate([-plankLength/5, 0]) square([materialThickness-2*cutWidth,femaleJointWidth], center = true);
+        translate([plankLength/5, 0]) square([materialThickness-2*cutWidth,femaleJointWidth], center = true);
     }
 }
