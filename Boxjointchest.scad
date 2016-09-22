@@ -91,8 +91,7 @@ module hinge_upper(){
     translate([-depth/2-materialThickness,0]){
         difference(){
             union(){
-            #translate([depth/2, -plankWidth/2])square([materialThickness, plankWidth/2]);
-            translate([depth/2+materialThickness,-plankWidth/2])circle(d = latchRingDiam);
+            translate([depth/2+materialThickness,0])circle(d = latchRingDiam);
             for(i = [0:2]){
                 rotate((i+.25)*180/plankCount){
                     translate([depth/2-materialThickness,0]){
@@ -102,9 +101,8 @@ module hinge_upper(){
                             if(i == 2){translate([materialThickness,maleJointWidth])rotate([0,0,60])circle(r=materialThickness);}
                         }
                     }
-                       
-                    }
                 }
+            }
                 difference(){
                     circle(d = depth+2*materialThickness);
                     circle(d = depth, $fn = plankCount*2);
@@ -117,7 +115,7 @@ module hinge_upper(){
                     
                     }
             }
-            translate([depth/2+materialThickness,-plankWidth/2])circle(d = axisWidth);
+            translate([depth/2+materialThickness,0])circle(d = axisWidth);
         }
 }
 }
@@ -145,11 +143,11 @@ module latchSide(){
     difference(){
         union(){
             circle(d = latchRingDiam);
-            translate([latchHoleOffset+latchHeight+materialThickness,0]) circle(d = latchRingDiam);
-            square([latchHoleOffset+latchHeight+materialThickness, materialThickness]);
+            translate([latchHoleOffset+latchHeight+materialThickness+plankWidth/2,0]) circle(d = latchRingDiam);
+            square([latchHoleOffset+latchHeight+materialThickness+plankWidth/2, materialThickness]);
         }
         circle(d = axisWidth);
-        translate([latchHoleOffset+latchHeight+materialThickness,0]) circle(d = axisWidth);
+        translate([latchHoleOffset+latchHeight+materialThickness+plankWidth/2,0]) circle(d = axisWidth);
     }
 }
  
