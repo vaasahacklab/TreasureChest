@@ -48,6 +48,9 @@ jointCount_y = round((depth-2*footWidth)/jointLength/2);
 jointCount_z = round(height/jointLength/2-1);
 latchProtrusion = 3*materialThickness;
 latchDiscDiam = 2*materialThickness;
+plankJoint = plankWidth/2;
+malePlankJoint = plankJoint + 2*cutWidth;
+femalePlankJoint = plankJoint;
 footHeight = 10;
  
 dist = 2;
@@ -292,7 +295,7 @@ module lidRim(){
             for(i = [0:plankCount-1]){
             rotate((i+.25)*180/plankCount){
                 translate([depth/2-materialThickness,0])
-                    square([materialThickness,maleJointWidth]);
+                    square([materialThickness, maleJointWidth]);
                
             }
         }
@@ -313,7 +316,7 @@ module lidSide(){
         for(i = [0:plankCount-1]){
             rotate((i+.25)*180/plankCount){
                 translate([depth/2-materialThickness,0])
-                    square([materialThickness,femaleJointWidth]);
+                    square([materialThickness, femaleJointWidth]);
             }
         }
     }
@@ -336,10 +339,10 @@ module backPlank(){
             translate([plankLength/2+materialThickness/2,0]) square([materialThickness, maleJointWidth], center = true);
             translate([-(plankLength/2+materialThickness/2),0]) square([materialThickness, maleJointWidth], center = true);
         }
-        translate([-plankLength/3, 0]) square([materialThickness, femaleJointWidth], center = true);
-        translate([-plankLength/5, 0]) square([materialThickness-2*cutWidth,femaleJointWidth], center = true);
-        translate([plankLength/5, 0]) square([materialThickness-2*cutWidth,femaleJointWidth], center = true);
-        translate([plankLength/3, 0]) square([materialThickness, femaleJointWidth], center = true);
+        translate([-plankLength/3, 0]) square([materialThickness-2*cutWidth, femaleJointWidth], center = true);
+        translate([-plankLength/5, 0]) square([materialThickness-2*cutWidth, femaleJointWidth], center = true);
+        translate([plankLength/5, 0]) square([materialThickness-2*cutWidth, femaleJointWidth], center = true);
+        translate([plankLength/3, 0]) square([materialThickness-2*cutWidth, femaleJointWidth], center = true);
     }
 }
  
@@ -350,9 +353,9 @@ module frontPlank(){
             translate([plankLength/2+materialThickness/2,0]) square([materialThickness, maleJointWidth], center = true);
             translate([-(plankLength/2+materialThickness/2),0]) square([materialThickness, maleJointWidth], center = true);
         }
-        translate([-plankLength/5, 0]) square([materialThickness-2*cutWidth,femaleJointWidth], center = true);
-        square([materialThickness-2*cutWidth,femaleJointWidth], center = true);
-        translate([plankLength/5, 0]) square([materialThickness-2*cutWidth,femaleJointWidth], center = true);
+        translate([-plankLength/5, 0]) square([materialThickness-2*cutWidth, femaleJointWidth], center = true);
+        square([materialThickness-2*cutWidth, femaleJointWidth], center = true);
+        translate([plankLength/5, 0]) square([materialThickness-2*cutWidth, femaleJointWidth], center = true);
     }
 }
  
@@ -363,7 +366,7 @@ module topPlank() {
             translate([plankLength/2+materialThickness/2,0]) square([materialThickness, maleJointWidth], center = true);
             translate([-(plankLength/2+materialThickness/2),0]) square([materialThickness, maleJointWidth], center = true);
         }
-        translate([-plankLength/5, 0]) square([materialThickness-2*cutWidth,femaleJointWidth], center = true);
-        translate([plankLength/5, 0]) square([materialThickness-2*cutWidth,femaleJointWidth], center = true);
+        translate([-plankLength/5, 0]) square([materialThickness-2*cutWidth, femaleJointWidth], center = true);
+        translate([plankLength/5, 0]) square([materialThickness-2*cutWidth, femaleJointWidth], center = true);
     }
 }
