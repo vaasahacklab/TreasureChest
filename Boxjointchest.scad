@@ -43,9 +43,9 @@ femaleJointLength = jointLength - 2*cutWidth;
 echo("femaleJointLength"); echo(femaleJointLength);
 latchProtrusion = 3*materialThickness;
 latchRingDiam = 2*materialThickness;
-jointCount_x = (width-2*footWidth)/jointLength/2;
-jointCount_y = (depth-2*footWidth)/jointLength/2;
-jointCount_z = height/jointLength/2-1;
+jointCount_x = round((width-2*footWidth)/jointLength/2);
+jointCount_y = round((depth-2*footWidth)/jointLength/2);
+jointCount_z = round(height/jointLength/2-1);
 latchProtrusion = 3*materialThickness;
 latchDiscDiam = 2*materialThickness;
 footHeight = 10;
@@ -111,7 +111,7 @@ module hinge_upper(){
                     
                     rotate([0,0,3*(180/(plankCount))])
                     translate([-depth/2-materialThickness,0])
-                    #square([depth+2*materialThickness,depth+materialThickness]);
+                    square([depth+2*materialThickness,depth+materialThickness]);
                     
                     }
             }
