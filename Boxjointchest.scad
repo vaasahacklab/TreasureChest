@@ -62,7 +62,7 @@ front_x = width;
  
 $fn = 50;
 build = true;
- 
+
 if(build) {
     bottom();
     translate([0,depth/2+height/2+dist+footHeight]) back();
@@ -221,12 +221,12 @@ module back(){
             translate([2*i*jointLength, 0])
                 square([femaleJointLength,materialThickness], center = true);
         }
-        translate([width/2-materialThickness, -height/2+jointLength/2])
+        translate([width/2-materialThickness, -height/2])
         for(i = [0:jointCount_z]){
             translate([0,2*i*jointLength])
                 square([materialThickness, femaleJointLength]);
         }
-        translate([-width/2, -height/2+jointLength/2])
+        translate([-width/2, -height/2])
         for(i = [0:jointCount_z]){
             translate([0,2*i*jointLength])
                 square([materialThickness, femaleJointLength]);
@@ -263,12 +263,12 @@ module front(){
             translate([2*i*jointLength, 0])
                 square([femaleJointLength,materialThickness], center = true);
         }
-        translate([width/2-materialThickness, -height/2+jointLength/2])
+        translate([width/2-materialThickness, -height/2])
         for(i = [0:jointCount_z]){
             translate([0,2*i*jointLength])
                 square([materialThickness, femaleJointLength]);
         }
-        translate([-width/2, -height/2+jointLength/2])
+        translate([-width/2, -height/2])
         for(i = [0:jointCount_z]){
             translate([0,2*i*jointLength])
                 square([materialThickness, femaleJointLength]);
