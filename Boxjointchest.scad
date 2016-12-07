@@ -62,29 +62,29 @@ front_x = width;
  
 $fn = 50;
 build = true;
- 
+
 if(build) {
     bottom();
     translate([0,depth/2+height/2+dist+footHeight]) back();
     translate([0,-(depth/2+height/2+dist)]) front();
     translate([(width/2+height/2+dist+footHeight),0])rotate([0,0,270])side();
-    translate([-(width/2+height/2+dist+footHeight),0])rotate([0,0,90])side();
+    translate([(width/2+height/2+dist+footHeight),depth+dist])rotate([0,0,270])side();
     translate([0,depth/2+height+5*dist+footHeight]) top();
     translate([width/2+height+2*dist+footHeight,0]) rotate([0,0,270]) lidSide();
-    translate([-(width/2+height+2*dist+footHeight),0]) rotate([0,0,90]) lidSide();
-    translate([(width/2+dist),depth+dist]) rotate([0,0,270])lidRim();
-    translate([-(width/2+dist),depth+dist]) rotate([0,0,90])lidRim();
+    translate([(width/2+height+2*dist+footHeight),depth+dist]) rotate([0,0,270]) lidSide();    
+    translate([(width/2+dist),2*(depth+dist)]) rotate([0,0,270])lidRim();
+    translate([(width/2+dist+height),2*(depth+dist)]) rotate([0,0,270])lidRim();
     translate([(width/2+dist), -depth/2-dist-materialThickness*.75]) hinge_lower();
     translate([(width/2+dist), -depth/2-dist-materialThickness*3.75]) hinge_lower();
-    translate([-(width/2+dist), -depth/2-dist-materialThickness*.75]) mirror() hinge_lower();
-    translate([-(width/2+dist), -depth/2-dist-materialThickness*3.75]) mirror() hinge_lower();
+    translate([(width/2+2*dist+materialThickness*16), -depth/2-dist-materialThickness*.75]) mirror() hinge_lower();
+    translate([(width/2+2*dist+materialThickness*16), -depth/2-dist-materialThickness*3.75]) mirror() hinge_lower();
     translate([(width/2+dist+materialThickness), -depth/2-2*dist-materialThickness*6.75]) latchSide();
-    translate([-(width/2+dist+materialThickness), -depth/2-2*dist-materialThickness*6.75]) mirror() latchSide();
-    translate([(width/2+3*dist+latchHeight*2), -depth/2-2*dist-materialThickness*12.75]) rotate([0,0,-45]) hinge_upper();
-    translate([-(width/2+6*dist), -depth/2-2*dist-materialThickness*12.75]) rotate([0,0,90]) mirror() hinge_upper();
-    translate([-(width/2+4*dist), -depth/2-2*dist-materialThickness*16.75]) rotate([0,0,90]) mirror() hinge_upper();
-    translate([(width/2+dist+10*materialThickness), -depth/2-2*dist-materialThickness*3]) latchRing();
-    translate([(width/2+3*dist+latchHeight), -depth/2-2*dist-materialThickness*13]) mirror() latchBase();
+    translate([(width/2+dist*3+materialThickness*5+latchHeight+latchHoleOffset), -depth/2-2*dist-materialThickness*6.75]) latchSide();
+    translate([(width/2+6*dist), -depth/2-2*dist-materialThickness*12.75]) rotate([0,0,-45]) mirror() hinge_upper();
+    translate([(width/2+3*dist+latchHeight*2+width/4), -depth/2-2*dist-materialThickness*12.75]) rotate([0,0,-90]) hinge_upper();
+    translate([(width/2+dist+materialThickness), depth*2.5+materialThickness*3]) rotate([0,0,-45]) mirror() hinge_upper();
+    translate([(width/2+height+4*materialThickness),2*(depth+dist)]) latchRing();
+    translate([(width/2+2*materialThickness),2*(depth+dist)]) latchBase();
 }
 
 module hinge_upper(){
@@ -221,12 +221,12 @@ module back(){
             translate([2*i*jointLength, 0])
                 square([femaleJointLength,materialThickness], center = true);
         }
-        translate([width/2-materialThickness, -height/2+jointLength/2])
+        translate([width/2-materialThickness, -height/2])
         for(i = [0:jointCount_z]){
             translate([0,2*i*jointLength])
                 square([materialThickness, femaleJointLength]);
         }
-        translate([-width/2, -height/2+jointLength/2])
+        translate([-width/2, -height/2])
         for(i = [0:jointCount_z]){
             translate([0,2*i*jointLength])
                 square([materialThickness, femaleJointLength]);
@@ -263,12 +263,12 @@ module front(){
             translate([2*i*jointLength, 0])
                 square([femaleJointLength,materialThickness], center = true);
         }
-        translate([width/2-materialThickness, -height/2+jointLength/2])
+        translate([width/2-materialThickness, -height/2])
         for(i = [0:jointCount_z]){
             translate([0,2*i*jointLength])
                 square([materialThickness, femaleJointLength]);
         }
-        translate([-width/2, -height/2+jointLength/2])
+        translate([-width/2, -height/2])
         for(i = [0:jointCount_z]){
             translate([0,2*i*jointLength])
                 square([materialThickness, femaleJointLength]);
