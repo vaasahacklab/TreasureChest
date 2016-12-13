@@ -7,8 +7,8 @@
 materialThickness = 4;
 cutWidth = 0.05;
  
-width = 100;
-height = 50;
+width = 150;
+height = 60;
 depth = 80;
  
 axisWidth = 2;
@@ -174,11 +174,15 @@ module side(){
             translate([-(depth-2*materialThickness-(footWidth-materialThickness-jointLength/2))/2,-height/2-footHeight/2]) {
                 square([footWidth-materialThickness-jointLength/2, footHeight], center = true);
             }
+            translate([depth/2-materialThickness, -height/2+jointLength/2])
             for(i = [0:jointCount_z]){
-                translate([depth/2-materialThickness/2,2*i*jointLength-jointLength*jointCount_z])
-                    square([materialThickness, maleJointLength], center = true);
-                translate([-depth/2+materialThickness/2,2*i*jointLength-jointLength*jointCount_z])
-                    square([materialThickness, maleJointLength], center = true);
+                translate([0,2*i*jointLength])
+                    square([materialThickness, femaleJointLength]);
+            }
+            translate([-depth/2, -height/2+jointLength/2])
+            for(i = [0:jointCount_z]){
+                translate([0,2*i*jointLength])
+                    square([materialThickness, femaleJointLength]);
             }
         }
         for(i = [0:jointCount_y]) {
@@ -221,12 +225,12 @@ module back(){
             translate([2*i*jointLength, 0])
                 square([femaleJointLength,materialThickness], center = true);
         }
-        translate([width/2-materialThickness, -height/2])
+        translate([width/2-materialThickness, -height/2+jointLength/2])
         for(i = [0:jointCount_z]){
             translate([0,2*i*jointLength])
                 square([materialThickness, femaleJointLength]);
         }
-        translate([-width/2, -height/2])
+        translate([-width/2, -height/2+jointLength/2])
         for(i = [0:jointCount_z]){
             translate([0,2*i*jointLength])
                 square([materialThickness, femaleJointLength]);
@@ -263,12 +267,12 @@ module front(){
             translate([2*i*jointLength, 0])
                 square([femaleJointLength,materialThickness], center = true);
         }
-        translate([width/2-materialThickness, -height/2])
+        translate([width/2-materialThickness, -height/2+jointLength/2])
         for(i = [0:jointCount_z]){
             translate([0,2*i*jointLength])
                 square([materialThickness, femaleJointLength]);
         }
-        translate([-width/2, -height/2])
+        translate([-width/2, -height/2+jointLength/2])
         for(i = [0:jointCount_z]){
             translate([0,2*i*jointLength])
                 square([materialThickness, femaleJointLength]);
