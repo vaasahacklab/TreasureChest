@@ -46,7 +46,6 @@ latchRingDiam = 2*materialThickness;
 jointCount_x = round((width-2*footWidth)/jointLength/2);
 jointCount_y = round((depth-2*footWidth)/jointLength/2);
 jointCount_z = round(height/jointLength/2-1);
-latchProtrusion = 3*materialThickness;
 latchDiscDiam = 2*materialThickness;
 footHeight = 10;
  
@@ -76,13 +75,13 @@ if(build) {
     translate([(width/2+dist+height),2*(depth+dist)]) rotate([0,0,270])lidRim();
     translate([(width/2+dist), -depth/2-dist-materialThickness*.75]) hinge_lower();
     translate([(width/2+dist), -depth/2-dist-materialThickness*3.75]) hinge_lower();
-    translate([(width/2+2*dist+materialThickness*16), -depth/2-dist-materialThickness*.75]) mirror() hinge_lower();
-    translate([(width/2+2*dist+materialThickness*16), -depth/2-dist-materialThickness*3.75]) mirror() hinge_lower();
+    translate([(width/2+2*dist+materialThickness*10), -depth/2-dist-materialThickness*.75]) hinge_lower();
+    translate([(width/2+2*dist+materialThickness*10), -depth/2-dist-materialThickness*3.75]) hinge_lower();
     translate([(width/2+dist+materialThickness), -depth/2-2*dist-materialThickness*6.75]) latchSide();
     translate([(width/2+dist*3+materialThickness*5+latchHeight+latchHoleOffset), -depth/2-2*dist-materialThickness*6.75]) latchSide();
-    translate([(width/2+6*dist), -depth/2-2*dist-materialThickness*12.75]) rotate([0,0,-45]) mirror() hinge_upper();
+    translate([(width/2+6*dist), -depth/2-2*dist-materialThickness*12.75]) rotate([0,0,270]) hinge_upper();
     translate([(width/2+3*dist+latchHeight*2+width/4), -depth/2-2*dist-materialThickness*12.75]) rotate([0,0,-90]) hinge_upper();
-    translate([(width/2+dist+materialThickness), depth*2.5+materialThickness*3]) rotate([0,0,-45]) mirror() hinge_upper();
+    translate([(width/2+dist+materialThickness), depth*2.5+materialThickness*3]) rotate([0,0,-45]) hinge_upper();
     translate([(width/2+height+4*materialThickness),2*(depth+dist)]) latchRing();
     translate([(width/2+2*materialThickness),2*(depth+dist)]) latchBase();
 }
